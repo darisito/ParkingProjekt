@@ -1,10 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Tomcat 8.5.65" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.65" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="1.8">
     <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+    <option name="UPDATING_POLICY" value="redeploy-artifacts" />
     <deployment>
-      <artifact name="se1-starter-repo:war exploded">
+      <artifact name="Parkhaus-Simulation:war">
         <settings>
-          <option name="CONTEXT_PATH" value="/se1_starter_repo_war_exploded" />
+          <option name="CONTEXT_PATH" value="/Parkhaus_Simulation_war" />
         </settings>
       </artifact>
     </deployment>
@@ -82,7 +83,7 @@
     <method v="2">
       <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="se1-starter-repo:war exploded" />
+        <artifact name="Parkhaus-Simulation:war" />
       </option>
     </method>
   </configuration>
