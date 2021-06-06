@@ -17,8 +17,8 @@ public class Level2Servlet extends ParkhausServlet {
 
     @Override
     String config(){
-        return ""; // use default config
+        return this.MAX() + ",8,20,100,10"; // use default config
         // Config Format is "Max, open_from, open_to, delay, simulation_speed"
-        // e.g. return this.MAX() + ",10,20,50,20";  // TODO replace by your own parameters
+        // e.g. return this.MAX() + ",10,20,50,20";
     }
 }

@@ -12,12 +12,14 @@ class CarTest {
     private Car newCar;
     private int nr;
     private long begin;
+    private String category;
 
     @BeforeEach
     void setup() {
         nr = 788;
         begin = 123456789l;
-        newCar = new Car(nr, begin);
+        category = "any";
+        newCar = new Car(nr, begin, category);
     }
     @AfterEach
     void teardown() {
@@ -55,6 +57,12 @@ class CarTest {
         assertEquals(0, newCar.getPrice(), "The number's are not equal");
     }
 
+    @DisplayName("Checks if the category the Car is being initialized correctly")
+    @Test
+    void testCategory() {
+        assertEquals("any", newCar.getCategory(), "the Strings are not equal");
+    }
+
     @DisplayName("Checks if the setEnd Method changes the Value of end")
     @Test
     void testSetEnd() {
@@ -79,6 +87,6 @@ class CarTest {
     @DisplayName("Checks if the toString representation of a car is being initialized correctly")
     @Test
     void testToString() {
-        assertEquals(newCar.getNr() + ", " + newCar.getBegin() + ", " + newCar.getEnd() + ", " + newCar.getDuration() + ", " + newCar.getPrice(), newCar.toString(), "The string's are not equal");
+        assertEquals(newCar.getNr() + ", " + newCar.getBegin() + ", " + newCar.getEnd() + ", " + newCar.getDuration() + ", " + newCar.getPrice() + ", " + newCar.getCategory(), newCar.toString(), "The string's are not equal");
     }
 }
