@@ -17,6 +17,7 @@ import java.util.Scanner;
  */
 public abstract class ParkhausServlet extends HttpServlet {
 
+    private ParkingGarageIF parkingGarage = new ParkingGarage();
     /* abstract methods, to be defined in subclasses */
     abstract String NAME(); // each ParkhausServlet should have a name, e.g. "Level1"
     abstract int MAX(); // maximum number of parking slots of a single parking level
@@ -95,23 +96,26 @@ public abstract class ParkhausServlet extends HttpServlet {
 
         switch( event ){
             case "enter":
-                CarIF newCar = new Car(new Scanner(restParams[0]).useDelimiter("\\D+").nextInt(), new Scanner(restParams[1]).useDelimiter("\\D+").nextLong());
+                CarIF newCar = new Car(new Scanner(restParams[0]).useDelimiter("\\D+").nextInt(), new Scanner(restParams[1]).useDelimiter("\\D+").nextLong(), new Scanner(restParams[7]).useDelimiter("\\D+").nextLine());
                 cars().add(newCar);
+                parkingGarage.enter(newCar);
                 //System.out.println( "enter," + newCar );
                 // re-direct car to another parking lot
                 // out.println( locator( newCar ) );
                 break;
             case "leave":
                 CarIF oldCar = cars().get(0);
+                parkingGarage.leave(oldCar);
                 if ( params.length > 4 ){
                     if (!"_".equals(restParams[2])) {
                         oldCar.setDuration(new Scanner(restParams[2]).useDelimiter("\\D+").nextInt());
+                        oldCar.setEnd(oldCar.getBegin() + oldCar.getDuration());
                     }
                     if (!"_".equals( restParams[3])){
                         oldCar.setPrice(new Scanner(restParams[3]).useDelimiter("\\D+").nextInt());
                     }
                 }
-                //System.out.println("leave, " + oldCar );
+                System.out.println("leave, " + oldCar );
                 break;
             case "invalid": case "occupied":
                 System.out.println(body);

@@ -6,6 +6,7 @@ package parkhaus;
     long getEnd();
     int getDuration();
     int getPrice();
+    String getCategory();
 
     void setEnd(long end);
     void setDuration(int duration);

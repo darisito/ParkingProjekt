@@ -10,13 +10,15 @@ public class Car implements CarIF {
     private long end;
     private int duration;
     private int price;
+    private String category;
 
-    public Car(int nr, long begin){
+    public Car(int nr, long begin, String category){
         this.nr = nr;
         this.begin = begin;
         this.end = 0;
         this.duration = 0;
         this.price = 0;
+        this.category = category;
     }
 
     @Override
@@ -45,6 +47,11 @@ public class Car implements CarIF {
     }
 
     @Override
+    public String getCategory() {
+        return category;
+    }
+
+    @Override
     public void setEnd(long end) {
         this.end = end;
     }
@@ -61,6 +68,6 @@ public class Car implements CarIF {
 
     @Override
     public String toString(){
-        return  nr + ", " + begin + ", " + end + ", " + duration + ", " + price;
+        return  nr + ", " + begin + ", " + end + ", " + duration + ", " + price + ", " + category;
     }
 }
