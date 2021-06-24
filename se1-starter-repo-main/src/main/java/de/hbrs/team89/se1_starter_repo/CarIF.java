@@ -9,7 +9,7 @@ interface CarIF {
    String getCategory();
    int getParkingSpotNr();
    String getVehicleType();
-
+ //test
    void setEnd(long end);
    void setDuration(int duration);
    void setPrice(int price);
