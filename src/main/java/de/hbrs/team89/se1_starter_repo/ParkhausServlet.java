@@ -2,7 +2,6 @@ package de.hbrs.team89.se1_starter_repo;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,34 +17,46 @@ import java.util.Scanner;
  */
 public abstract class ParkhausServlet extends HttpServlet {
 
+    private ParkingGarageIF parkingGarage = new ParkingGarage();
     /* abstract methods, to be defined in subclasses */
     abstract String NAME(); // each ParkhausServlet should have a name, e.g. "Level1"
     abstract int MAX(); // maximum number of parking slots of a single parking level
-    abstract String config(); // configuration of a single parking level
+    abstract String config(); // configuration of a single parking level,
+
 
     /**
      * HTTP GET
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         String cmd = request.getParameter("cmd");
+        //gibt get anfragen auf server console aus
         System.out.println( cmd + " requested: " + request.getQueryString());
-        switch ( cmd ){
+
+        //meins
+        String[] requestParamString = request.getQueryString().split("=");
+        String command = requestParamString[0];
+        String param = requestParamString[1];
+
+
+        /**
+         if ("cmd".equals( command) && "sum".equals( param )) {
+         response.setContentType("text/html");
+         out.println(sum);
+         System.out.println("sum = " + sum);
+         }
+         */
+
+
+        switch (cmd){
             case "config":
                 // Overwrite Parkhaus config parameters
                 // Max, open_from, open_to, delay, simulation_speed
                 out.println( config() );
                 break;
             case "sum":
-                // ToDo
-                break;
-            case "avg":
-                // ToDo
-                break;
-            case "max":
-                // ToDo
+                out.println( getPersistentSum() );
                 break;
             case "cars":
                 // TODO: Send list of cars stored on the server to the client.
@@ -53,8 +64,7 @@ public abstract class ParkhausServlet extends HttpServlet {
                 // Values of a single car are separated by slash.
                 // Format: Nr, timer begin, duration, price, Ticket, color, space, client category, vehicle type, license (PKW Kennzeichen)
                 // For example:
-                // TODO replace by real list of cars
-                out.println("1/1619420863044/_/_/Ticket1/#0d1e0a/2/any/PKW/1,2/1619420863045/_/_/Ticket2/#dd10aa/3/any/PKW/2");
+                // out.println("1/1619420863044/_/_/Ticket1/#0d1e0a/2/any/PKW/1,2/1619420863045/_/_/Ticket2/#dd10aa/3/any/PKW/2"); // TODO replace by real list of cars
                 break;
             case "chart":
                 // TODO send chart infos as JSON object to client
@@ -62,58 +72,66 @@ public abstract class ParkhausServlet extends HttpServlet {
             default:
                 System.out.println("Invalid Command: " + request.getQueryString());
         }
-
     }
 
     /**
      * HTTP POST
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String body = getBody( request );
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+
+
 
         System.out.println( body );
         String[] params = body.split(",");
         String event = params[0];
         String[] restParams = Arrays.copyOfRange(params, 1, params.length);
 
+
+
+
+
         switch( event ){
             case "enter":
-                CarIF newCar = new Car( restParams );
-                cars().add( newCar );
-                // System.out.println( "enter," + newCar );
-
+                CarIF newCar = new Car(new Scanner(restParams[0]).useDelimiter("\\D+").nextInt(), new Scanner(restParams[1]).useDelimiter("\\D+").nextLong(), new Scanner(restParams[7]).useDelimiter("\\D+").nextLine(), new Scanner(restParams[6]).useDelimiter("\\D+").nextInt(), new Scanner(restParams[8]).useDelimiter("\\D+").nextLine());
+                cars().add(newCar);
+                parkingGarage.enter(newCar);
+                System.out.println( "enter," + newCar );
                 // re-direct car to another parking lot
-                out.println( locator( newCar ) );
+                // out.println( locator( newCar ) );
                 break;
             case "leave":
-                CarIF oldCar = cars().get(0);  // ToDo remove car from list
+                CarIF oldCar = cars().get(cars().size() - 1);
+                parkingGarage.leave(oldCar);
                 if ( params.length > 4 ){
-                    String priceString = params[4];
-                    if ( ! "_".equals( priceString ) ){
-                        // for JSON format skip over text and proceed to next integer
-                        double price = (double)new Scanner( priceString ).useDelimiter("\\D+").nextInt();
-                        price /= 100.0d;  // like Integer.parseInt( priceString ) / 100.0d;
-                        // store new sum in ServletContext
-                        // ToDo getContext().setAttribute("sum"+NAME(), getSum() + price );
+                    if (!"_".equals(restParams[2])) {
+                        oldCar.setDuration(new Scanner(restParams[2]).useDelimiter("\\D+").nextInt());
+                        oldCar.setEnd(oldCar.getBegin() + oldCar.getDuration());
+                    }
+                    if (!"_".equals( restParams[3])){
+                        oldCar.setPrice(new Scanner(restParams[3]).useDelimiter("\\D+").nextInt());
                     }
                 }
-                System.out.println( "leave," + oldCar );
+                System.out.println("leave, " + oldCar );
                 break;
             case "invalid": case "occupied":
-                System.out.println( body );
+                System.out.println(body);
                 break;
             case "tomcat":
                 out.println( getServletConfig().getServletContext().getServerInfo()
                         + getServletConfig().getServletContext().getMajorVersion()
                         + getServletConfig().getServletContext().getMinorVersion() );
                 break;
+
+
             default:
-                System.out.println( body );
+                //System.out.println( body );
                 // System.out.println( "Invalid Command: " + body );
         }
+
+
 
     }
 
@@ -133,7 +151,6 @@ public abstract class ParkhausServlet extends HttpServlet {
      */
     int locator( CarIF car ){
         // numbers of parking lots start at 1, not zero
-        // return 1;  // always use the first space
         return 1 + (( cars().size() - 1 ) % this.MAX());
     }
 
@@ -149,9 +166,18 @@ public abstract class ParkhausServlet extends HttpServlet {
     }
 
     /**
-    * @param request the HTTP POST request
-    * @return the body of the request
-    */
+     * TODO: replace this by your own function
+     * @return the sum of parking fees of all cars stored so far
+     */
+    Float getPersistentSum(){
+        Float sum = (Float)getContext().getAttribute("sum");
+        return sum == null ?  0.0f : sum;
+    }
+
+    /**
+     * @param request the HTTP POST request
+     * @return the body of the request
+     */
     String getBody( HttpServletRequest request ) throws IOException {
 
         StringBuilder stringBuilder = new StringBuilder();
