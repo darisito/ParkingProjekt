@@ -27,6 +27,19 @@ public class ParkingGarage implements ParkingGarageIF {
     }
 
     @Override
+    public int next_free_parkingspot() {
+        int index = 1;
+
+        for (CarIF car: parkingspot) {
+            index++;
+            if (car == null) {
+                break;
+            }
+        }
+        return index;
+    }
+
+    @Override
     public List<CarIF> getParkingSpot() {
         return parkingspot;
     }
