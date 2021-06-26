@@ -5,16 +5,16 @@ public class Stats implements StatsIF {
     //UNDO/inverse  HINZUFÜGEN
     //in servlet mit OBJEKT machen
 
-    private static double minute_income;
-    private static double hourly_income;
-    private static double daily_income;
+    private double minute_income;
+    private double hourly_income;
+    private double daily_income;
 
     //ToDo wie viele autos reinkommen
 
     //private double carprice_sum;
 
-    public static long duration_sum;      //the summed up parking duration of all cars
-    public static long average_duration;  //the average duration that a car parks
+    public long duration_sum;      //the summed up parking duration of all cars
+    public long average_duration;  //the average duration that a car parks
 
 
     //constructor
