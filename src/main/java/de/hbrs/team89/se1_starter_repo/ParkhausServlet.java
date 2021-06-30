@@ -6,10 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * common superclass for all servlets
@@ -17,6 +14,9 @@ import java.util.Scanner;
  */
 public abstract class ParkhausServlet extends HttpServlet {
 
+
+    Stats stats = Stats.getInstance();
+    int sum_of_prices;
 
     private ParkingGarageIF parkingGarage = new ParkingGarage();
     /* abstract methods, to be defined in subclasses */
@@ -57,7 +57,7 @@ public abstract class ParkhausServlet extends HttpServlet {
                 out.println( config() );
                 break;
             case "sum":
-                out.println( getPersistentSum() );
+                out.println( "<h5 style=\"color:green;\">Them sum of all cars stored so far:</h5> " + stats.calculate_sum ( cars() ));
                 break;
             case "cars":
                 // TODO: Send list of cars stored on the server to the client.
@@ -69,6 +69,9 @@ public abstract class ParkhausServlet extends HttpServlet {
                 break;
             case "chart":
                 // TODO send chart infos as JSON object to client
+                break;
+            case "Total Cars":
+                out.println(stats.total_cars( cars() ));
                 break;
             default:
                 System.out.println("Invalid Command: " + request.getQueryString());
@@ -89,9 +92,6 @@ public abstract class ParkhausServlet extends HttpServlet {
         String[] params = body.split(",");
         String event = params[0];
         String[] restParams = Arrays.copyOfRange(params, 1, params.length);
-
-
-
 
 
         switch( event ){

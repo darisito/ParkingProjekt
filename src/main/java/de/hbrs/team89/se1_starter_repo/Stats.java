@@ -1,6 +1,12 @@
 package de.hbrs.team89.se1_starter_repo;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Stats implements StatsIF {
+
+    private static Stats instance = null;
 
     //UNDO/inverse  HINZUFÜGEN
     //in servlet mit OBJEKT machen
@@ -18,9 +24,30 @@ public class Stats implements StatsIF {
 
 
     //constructor
-    public Stats() {
+    private Stats() {
     }
 
+    public static Stats getInstance(){
+        if(instance == null){
+            instance = new Stats();
+        }
+        return instance;
+    }
+
+    public int calculate_sum ( List<CarIF> cars) {
+        int sum = cars.stream()
+                .mapToInt( c -> c.getPrice())
+                .sum();
+
+        return sum;
+    }
+
+    public long total_cars ( List<CarIF> cars) {
+        long total_cars = cars.stream()
+                .filter (c -> c.getDuration() != 0)
+                .count();
+        return total_cars;
+    }
 
     //income related
     /**
@@ -112,8 +139,6 @@ public class Stats implements StatsIF {
                         "}";
         return chartStr;
     }
-
-
 
 }
 

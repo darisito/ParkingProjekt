@@ -12,7 +12,7 @@
     <meta property="og:description" content="Bachelor Course Software Engineering 1 (SE1), Hochschule Bonn-Rhein-Sieg.">
     <link rel="shortcut icon" href="https://kaul.inf.h-brs.de/favicon.ico" />
     <title>Parkhaus-Simulation</title>
-    <script src="https://kaul.inf.h-brs.de/ccmjs/mkaul-components/parkhaus/versions/ccm.parkhaus-10.0.2.js"></script><ccm-parkhaus-10-0-2 key='{"name":"ClientOnlyParkhaus","server_url":"","extra_charts":[]}'></ccm-parkhaus-10-0-2>
+    <script src="https://kaul.inf.h-brs.de/ccmjs/mkaul-components/parkhaus/versions/ccm.parkhaus-10.0.2.js"></script><ccm-parkhaus-10-0-2 key='{"name":"ClientOnlyParkhaus","server_url":"","extra_buttons": [], "extra_charts":[]}'></ccm-parkhaus-10-0-2>
     <style>
         * {
             font-family: sans-serif, Helvetica, Arial;
@@ -51,7 +51,7 @@
     <h1>Parkhaus Etage 1</h1>
     <ccm-parkhaus-10-0-2
             server_url="./level1-servlet"
-            extra_buttons='[]'
+            extra_buttons='["sum", "Total Cars"]'
             hide_table="true"
             name="Etage1"
             license_max="15"
