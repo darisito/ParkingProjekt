@@ -16,6 +16,7 @@ public interface StatsIF {
     long total_cars ( List<CarIF> cars);
     long duration_sum( long duration );
     long average_duration_mins(long duration, int count);
+    double average_car_price(List<CarIF> cars);
     String chartJson(String[] xLabel,int[] yData);
 
 

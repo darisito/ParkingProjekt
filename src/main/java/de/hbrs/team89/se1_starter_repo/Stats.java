@@ -149,7 +149,7 @@ public class Stats implements StatsIF {
 
     }
 
-    public double average_car_amount ( List<CarIF> cars) {
+    public double average_car_price(List<CarIF> cars) {
 
         double average = cars.stream()
                 .mapToDouble (car -> car.getPrice() )

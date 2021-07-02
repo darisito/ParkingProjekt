@@ -57,7 +57,10 @@ public abstract class ParkhausServlet extends HttpServlet {
                 out.println( config() );
                 break;
             case "sum":
-                out.println( "<h5 style=\"color:green;\">Them sum of all cars stored so far:</h5> " + stats.calculate_sum ( cars() ));
+                out.println( "<h4 style=\"color:green;\">Them sum of all cars stored so far:</h4> " +
+                        "<strong>"+
+                        stats.calculate_sum ( cars() )+
+                        "</strong>");
                 break;
             case "cars":
                 // TODO: Send list of cars stored on the server to the client.
@@ -76,12 +79,20 @@ public abstract class ParkhausServlet extends HttpServlet {
 
                 out.println(chart);
 
-                System.out.println(stats.average_car_amount(cars() ));
+                System.out.println(stats.average_car_price(cars() ));
 
                 break;
             case "Total Cars":
                 out.println(stats.total_cars_in( cars() ));
                 break;
+            case "Average Price":
+
+                out.println("<p> The average price for all cars that have entered and left: </p>"+
+                        "<strong>" +
+                        stats.average_car_price( cars() )+
+                        "</strong>");
+
+
             default:
                 System.out.println("Invalid Command: " + request.getQueryString());
         }
