@@ -1,6 +1,7 @@
 package de.hbrs.team89.se1_starter_repo;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Car implements CarIF {
 
@@ -16,6 +17,8 @@ public class Car implements CarIF {
     /*
      * @params nr, begin time, category, nr of parking spot and vehicle type of the car e.g. (1, 123456789L, "Family", 5, "PKW")
      */
+    public Car(){}
+
     public Car(int nr, long begin, String category, int parkingSpotNr, String vehicleType){
         this.nr = nr;
         this.begin = begin;
@@ -115,6 +118,26 @@ public class Car implements CarIF {
         this.price = price;
     }
 
+    public void setNr(int nr) {
+        this.nr = nr;
+    }
+
+    public void setBegin(long begin) {
+        this.begin = begin;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setParkingSpotNr(int parkingSpotNr) {
+        this.parkingSpotNr = parkingSpotNr;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
     /*
      * @return toString format of a car
      */
@@ -122,4 +145,6 @@ public class Car implements CarIF {
     public String toString(){
         return  nr + ", " + begin + ", " + end + ", " + duration + ", " + price + ", " + category + ", " + parkingSpotNr + ", " + vehicleType;
     }
+
+
 }

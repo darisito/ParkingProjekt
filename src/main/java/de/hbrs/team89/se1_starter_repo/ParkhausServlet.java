@@ -67,11 +67,20 @@ public abstract class ParkhausServlet extends HttpServlet {
                 // For example:
                 // out.println("1/1619420863044/_/_/Ticket1/#0d1e0a/2/any/PKW/1,2/1619420863045/_/_/Ticket2/#dd10aa/3/any/PKW/2"); // TODO replace by real list of cars
                 break;
-            case "chart":
-                // TODO send chart infos as JSON object to client
+            case "Price Distribution":
+
+                String[] xData = stats.getXDataPriceDistribution();
+                int[] yData = stats.getYDataPriceDistribution( cars() );
+
+                String chart = stats.chartJson( xData, yData);
+
+                out.println(chart);
+
+                System.out.println(stats.average_car_amount(cars() ));
+
                 break;
             case "Total Cars":
-                out.println(stats.total_cars( cars() ));
+                out.println(stats.total_cars_in( cars() ));
                 break;
             default:
                 System.out.println("Invalid Command: " + request.getQueryString());
@@ -105,6 +114,8 @@ public abstract class ParkhausServlet extends HttpServlet {
                 break;
             case "leave":
                 CarIF oldCar = cars().get(cars().size() - 1);
+
+
                 parkingGarage.leave(oldCar);
                 if ( params.length > 4 ){
                     if (!"_".equals(restParams[2])) {
@@ -113,12 +124,18 @@ public abstract class ParkhausServlet extends HttpServlet {
                     }
                     if (!"_".equals( restParams[3])){
                         oldCar.setPrice(new Scanner(restParams[3]).useDelimiter("\\D+").nextInt());
+                        // store new sum in ServletContext
+                        // ToDo getContext().setAttribute("sum"+NAME(), getSum() + price );
+                        //getContext().setAttribute("sum"+NAME(), stats.calculate_sum( cars() ));
+                        System.out.println(stats.calculate_sum(cars()) );
+                        getContext().setAttribute("sum"+NAME(), stats.calculate_sum( cars() ));
                     }
                 }
                 System.out.println("leave, " + oldCar );
+                System.out.println("Context attribute sum : "+getContext().getAttribute("sum"+NAME()) );
                 break;
             case "invalid": case "occupied":
-                System.out.println(body);
+                System.out.println("body: "+body);
                 break;
             case "tomcat":
                 out.println( getServletConfig().getServletContext().getServerInfo()

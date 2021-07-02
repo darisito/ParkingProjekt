@@ -3,6 +3,9 @@ package de.hbrs.team89.se1_starter_repo;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Math;
+import java.util.OptionalDouble;
+
 
 public class Stats implements StatsIF {
 
@@ -27,6 +30,7 @@ public class Stats implements StatsIF {
     private Stats() {
     }
 
+    //Singleton
     public static Stats getInstance(){
         if(instance == null){
             instance = new Stats();
@@ -45,6 +49,12 @@ public class Stats implements StatsIF {
     public long total_cars ( List<CarIF> cars) {
         long total_cars = cars.stream()
                 .filter (c -> c.getDuration() != 0)
+                .count();
+        return total_cars;
+    }
+
+    public long total_cars_in ( List<CarIF> cars) {
+        long total_cars = cars.stream()
                 .count();
         return total_cars;
     }
@@ -102,6 +112,64 @@ public class Stats implements StatsIF {
 
         return average_duration;
     }
+
+    //amount of cars which price is lower than 100
+    public int get_car_count_less_than_100 ( List<CarIF> cars ){
+
+        long count = cars.stream()
+                .filter(car -> car.getPrice() <= 100)
+                .count();
+
+        return (int) count;
+    }
+
+    //zwischen 100 und 1000
+    public int get_car_count_inbetween ( List<CarIF> cars ){
+
+        long count = cars.stream()
+                .filter(car -> car.getPrice() > 100 && car.getPrice() <= 1000)
+                .count();
+
+        return (int) count;
+    }
+
+    public int get_car_count_higherthan_1000 ( List<CarIF> cars ){
+
+        long count = cars.stream()
+                .filter(car -> car.getPrice() > 1000)
+                .count();
+
+        return (int) count;
+    }
+
+    public String[] getXDataPriceDistribution(){
+
+        String[] xData = {"1-100", "100-1000", ">1000"};
+        return xData;
+
+    }
+
+    public double average_car_amount ( List<CarIF> cars) {
+
+        double average = cars.stream()
+                .mapToDouble (car -> car.getPrice() )
+                .reduce( 0, (a,b) -> a+b) / cars.size() ;
+
+        return average;
+
+    }
+
+
+    public int[] getYDataPriceDistribution( List<CarIF> cars){
+
+        int[] yData = { get_car_count_less_than_100(cars),
+                        get_car_count_inbetween(cars),
+                        get_car_count_higherthan_1000(cars) };
+
+        return yData;
+    }
+
+
 
     /**
      * @return returns the string in Json format for chart creation

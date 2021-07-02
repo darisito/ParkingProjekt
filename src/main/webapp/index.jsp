@@ -58,6 +58,7 @@
             client_categories='["any","Family"]'
             vehicle_types='["PKW","SUV"]'
             price_factor='{"SUV":2,"Family":0.5}'
+            extra_charts = '["Price Distribution"]'
             max="11">
     </ccm-parkhaus-10-0-2>
 </div>
