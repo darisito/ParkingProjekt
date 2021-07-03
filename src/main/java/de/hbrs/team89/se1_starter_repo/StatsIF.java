@@ -13,7 +13,8 @@ public interface StatsIF {
     //duration stats
 
     int calculate_sum ( List<CarIF> cars);
-    long total_cars ( List<CarIF> cars);
+    //long total_cars ( List<CarIF> cars);
+    long total_cars_in ( List<CarIF> cars);
     long duration_sum( long duration );
     long average_duration_mins(long duration, int count);
     double average_car_price(List<CarIF> cars);

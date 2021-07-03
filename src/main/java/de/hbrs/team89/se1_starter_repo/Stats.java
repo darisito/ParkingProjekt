@@ -11,7 +11,7 @@ public class Stats implements StatsIF {
 
     private static Stats instance = null;
 
-    //UNDO/inverse  HINZUFÜGEN
+    //ToDo UNDO/inverse  HINZUFÜGEN
     //in servlet mit OBJEKT machen
 
     private double minute_income;
@@ -30,7 +30,7 @@ public class Stats implements StatsIF {
     private Stats() {
     }
 
-    //Singleton
+    //singleton
     public static Stats getInstance(){
         if(instance == null){
             instance = new Stats();
@@ -38,6 +38,9 @@ public class Stats implements StatsIF {
         return instance;
     }
 
+    /**
+     * @return returns the sum of all cars that have done one cycle of enter and leave
+     */
     public int calculate_sum ( List<CarIF> cars) {
         int sum = cars.stream()
                 .mapToInt( c -> c.getPrice())
@@ -46,13 +49,16 @@ public class Stats implements StatsIF {
         return sum;
     }
 
-    public long total_cars ( List<CarIF> cars) {
+/*    public long total_cars ( List<CarIF> cars) {
         long total_cars = cars.stream()
                 .filter (c -> c.getDuration() != 0)
                 .count();
         return total_cars;
-    }
+    }*/
 
+    /**
+     * @return total amount of cars that went in so far
+     */
     public long total_cars_in ( List<CarIF> cars) {
         long total_cars = cars.stream()
                 .count();
@@ -133,6 +139,9 @@ public class Stats implements StatsIF {
         return (int) count;
     }
 
+    /**
+     * @return returns amount of cars that have a price higher than 1000€
+     */
     public int get_car_count_higherthan_1000 ( List<CarIF> cars ){
 
         long count = cars.stream()
@@ -142,6 +151,9 @@ public class Stats implements StatsIF {
         return (int) count;
     }
 
+    /**
+     * @return returns price ranges for the x-axis of a graph
+     */
     public String[] getXDataPriceDistribution(){
 
         String[] xData = {"1-100", "100-1000", ">1000"};
@@ -149,6 +161,21 @@ public class Stats implements StatsIF {
 
     }
 
+    /**
+     * @return returns amount of cars for the y-axis of a graph
+     */
+    public int[] getYDataPriceDistribution( List<CarIF> cars){
+
+        int[] yData = { get_car_count_less_than_100(cars),
+                get_car_count_inbetween(cars),
+                get_car_count_higherthan_1000(cars) };
+
+        return yData;
+    }
+
+    /**
+     * @return returns the average price of a car
+     */
     public double average_car_price(List<CarIF> cars) {
 
         double average = cars.stream()
@@ -160,19 +187,8 @@ public class Stats implements StatsIF {
     }
 
 
-    public int[] getYDataPriceDistribution( List<CarIF> cars){
-
-        int[] yData = { get_car_count_less_than_100(cars),
-                        get_car_count_inbetween(cars),
-                        get_car_count_higherthan_1000(cars) };
-
-        return yData;
-    }
-
-
-
     /**
-     * @return returns the string in Json format for chart creation
+     * @return returns the string in Json format used for chart creation
      */
     public String chartJson( String[] xLabel, int[] yData){
         String chartStr= "{\n" +
