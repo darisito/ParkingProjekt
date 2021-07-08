@@ -17,6 +17,10 @@ import java.util.Scanner;
  */
 public abstract class ParkhausServlet extends HttpServlet {
 
+
+    Stats stats = Stats.getInstance();
+    int sum_of_prices;
+
     private ParkingGarageIF parkingGarage = new ParkingGarage();
     /* abstract methods, to be defined in subclasses */
     abstract String NAME(); // each ParkhausServlet should have a name, e.g. "Level1"
@@ -56,7 +60,10 @@ public abstract class ParkhausServlet extends HttpServlet {
                 out.println( config() );
                 break;
             case "sum":
-                out.println( getPersistentSum() );
+                out.println( "<h4 style=\"color:green;\">Them sum of all cars stored so far:</h4> " +
+                        "<strong>"+
+                        stats.calculate_sum ( cars() )+
+                        "</strong>");
                 break;
             case "cars":
                 // TODO: Send list of cars stored on the server to the client.
@@ -69,10 +76,29 @@ public abstract class ParkhausServlet extends HttpServlet {
                     out.println(c + ", ");
                 }
                 break;
+            case "Price Distribution":
 
-            case "chart":
-                // TODO send chart infos as JSON object to client
+                String[] xData = stats.getXDataPriceDistribution();
+                int[] yData = stats.getYDataPriceDistribution( cars() );
+
+                String chart = stats.chartJson( xData, yData);
+
+                out.println(chart);
+
+                System.out.println(stats.average_car_price(cars() ));
+
                 break;
+            case "Total Cars":
+                out.println(stats.total_cars_in( cars() ));
+                break;
+            case "Average Price":
+
+                out.println("<p> The average price for all cars that have entered and left: </p>"+
+                        "<strong>" +
+                        stats.average_car_price( cars() )+
+                        "</strong>");
+
+
             default:
                 System.out.println("Invalid Command: " + request.getQueryString());
         }
@@ -117,6 +143,11 @@ public abstract class ParkhausServlet extends HttpServlet {
                     }
                     if (!"_".equals( restParams[3])){
                         oldCar.setPrice(new Scanner(restParams[3]).useDelimiter("\\D+").nextInt());
+                        // store new sum in ServletContext
+                        // ToDo getContext().setAttribute("sum"+NAME(), getSum() + price );
+                        //getContext().setAttribute("sum"+NAME(), stats.calculate_sum( cars() ));
+                        System.out.println(stats.calculate_sum(cars()) );
+                        getContext().setAttribute("sum"+NAME(), stats.calculate_sum( cars() ));
                     }
                 }
                 parkingGarage.leave(oldCar);
@@ -155,6 +186,11 @@ public abstract class ParkhausServlet extends HttpServlet {
      * TODO: replace this by your own function
      * @return the number of the free parking lot to which the next incoming car will be directed
      */
+    /*int locator( CarIF car ){
+        // numbers of parking lots start at 1, not zero
+        return 1 + (( cars().size() - 1 ) % this.MAX());
+    }*/
+
     int locator( CarIF car ){
         // numbers of parking lots start at 1, not zero
         return 1 + (( cars().size() - 1 ) % this.MAX());
