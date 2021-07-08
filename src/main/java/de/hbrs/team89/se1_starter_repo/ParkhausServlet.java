@@ -29,9 +29,13 @@ public abstract class ParkhausServlet extends HttpServlet {
      * HTTP GET
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         String cmd = request.getParameter("cmd");
+        //Autor Darius
+        String amount = request.getParameter("amount");
         //gibt get anfragen auf server console aus
         System.out.println( cmd + " requested: " + request.getQueryString());
 
