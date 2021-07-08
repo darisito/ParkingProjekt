@@ -1,6 +1,10 @@
 package de.hbrs.team89.se1_starter_repo;
 
-import java.util.Arrays;
+/**
+ * @author Dilan Ahmad
+ * @since 08.07.2021
+ * @version 1.0
+ */
 
 public class Car implements CarIF {
 
@@ -9,25 +13,31 @@ public class Car implements CarIF {
     private long end;
     private int duration;
     private int price;
+    private String ticket;
+    private String color;
+    private int space;
     private String category;
-    private int parkingSpotNr;
     private String vehicleType;
+    private int license;
 
-    /*
-     * @params nr, begin time, category, nr of parking spot and vehicle type of the car e.g. (1, 123456789L, "Family", 5, "PKW")
+    /**
+     * @params nr, begin time, ticket, color, parking number, category, vehicle type and license plate of the car
      */
-    public Car(int nr, long begin, String category, int parkingSpotNr, String vehicleType){
+    public Car(int nr, long begin, String ticket, String color, int space, String category, String vehicleType, int license){
         this.nr = nr;
         this.begin = begin;
         this.end = 0;
         this.duration = 0;
         this.price = 0;
+        this.ticket = ticket;
+        this.color = color;
+        this.space = space;
         this.category = category;
-        this.parkingSpotNr = parkingSpotNr;
         this.vehicleType = vehicleType;
+        this.license = license;
     }
 
-    /*
+    /**
      * @return nr of the car
      */
     @Override
@@ -35,7 +45,7 @@ public class Car implements CarIF {
         return nr;
     }
 
-    /*
+    /**
      * @return begin time of the car
      */
     @Override
@@ -43,7 +53,7 @@ public class Car implements CarIF {
         return begin;
     }
 
-    /*
+    /**
      * @return end time of the car
      */
     @Override
@@ -51,7 +61,7 @@ public class Car implements CarIF {
         return end;
     }
 
-    /*
+    /**
      * @return duration the car has been parking
      */
     @Override
@@ -59,7 +69,7 @@ public class Car implements CarIF {
         return duration;
     }
 
-    /*
+    /**
      * @return price the car has to pay
      */
     @Override
@@ -67,7 +77,23 @@ public class Car implements CarIF {
         return price;
     }
 
-    /*
+    /**
+     * @return ticket for the space of the car
+     */
+    @Override
+    public String getTicket() {
+        return ticket;
+    }
+
+    /**
+     * @return color of the car
+     */
+    @Override
+    public String getColor() {
+        return color;
+    }
+
+    /**
      * @return category of the car
      */
     @Override
@@ -75,15 +101,15 @@ public class Car implements CarIF {
         return category;
     }
 
-    /*
-     * @return parking spot number the car has been parking in
+    /**
+     * @return parking space number the car has been parking in
      */
     @Override
-    public int getParkingSpotNr() {
-        return parkingSpotNr;
+    public int getSpace() {
+        return space;
     }
 
-    /*
+    /**
      * @return vehicle type of the car
      */
     @Override
@@ -91,7 +117,15 @@ public class Car implements CarIF {
         return vehicleType;
     }
 
-    /*
+    /**
+     * @return license plate of the car
+     */
+    @Override
+    public int getLicense() {
+        return license;
+    }
+
+    /**
      * @param end time of the car
      */
     @Override
@@ -99,7 +133,7 @@ public class Car implements CarIF {
         this.end = end;
     }
 
-    /*
+    /**
      * @param duration the car has been parking
      */
     @Override
@@ -107,19 +141,19 @@ public class Car implements CarIF {
         this.duration = duration;
     }
 
-    /*
-     * @param the price the car has to pay
+    /**
+     * @param price the car has to pay
      */
     @Override
     public void setPrice(int price) {
         this.price = price;
     }
 
-    /*
-     * @return toString format of a car
+    /**
+     * @return toString representation of a car
      */
     @Override
     public String toString(){
-        return  nr + ", " + begin + ", " + end + ", " + duration + ", " + price + ", " + category + ", " + parkingSpotNr + ", " + vehicleType;
+        return  nr + "/" + begin + "/" +  + duration + "/" + price + "/" + ticket + "/" + color + "/" + space + "/" + category + "/" + vehicleType + "/" + license;
     }
 }

@@ -48,6 +48,9 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.22170544" />
     <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RecentsManager">
@@ -58,16 +61,14 @@
       <recent name="de.hbrs.team89.se1_starter_repo" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 8.5.40">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.CarTest">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -104,8 +105,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ParkingGarageTest" />
         <item itemvalue="JUnit.CarTest" />
+        <item itemvalue="JUnit.ParkingGarageTest" />
       </list>
     </recent_temporary>
   </component>
@@ -119,6 +120,17 @@
       <updated>1623754052232</updated>
       <workItem from="1623754054420" duration="3143000" />
       <workItem from="1623757324487" duration="50000" />
+      <workItem from="1623790960048" duration="127000" />
+      <workItem from="1624107804368" duration="4807000" />
+      <workItem from="1624190826962" duration="1039000" />
+      <workItem from="1624544225062" duration="264000" />
+      <workItem from="1624545493861" duration="567000" />
+      <workItem from="1624713325599" duration="871000" />
+      <workItem from="1625497337938" duration="970000" />
+      <workItem from="1625569441822" duration="2105000" />
+      <workItem from="1625575395940" duration="4022000" />
+      <workItem from="1625744734575" duration="3145000" />
+      <workItem from="1625749130641" duration="1145000" />
     </task>
     <servers />
   </component>
