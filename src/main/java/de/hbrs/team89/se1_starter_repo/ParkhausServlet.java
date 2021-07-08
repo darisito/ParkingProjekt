@@ -142,8 +142,16 @@ public abstract class ParkhausServlet extends HttpServlet {
                         getContext().setAttribute("sum"+NAME(), stats.calculate_sum( cars() ));
                     }
                 }
+                //test
+
+                System.out.println();
+
+                System.out.println(oldCar.getBegin());
+
                 System.out.println("leave, " + oldCar );
                 System.out.println("Context attribute sum : "+getContext().getAttribute("sum"+NAME()) );
+
+
                 break;
             case "invalid": case "occupied":
                 System.out.println("body: "+body);
@@ -178,10 +186,16 @@ public abstract class ParkhausServlet extends HttpServlet {
      * TODO: replace this by your own function
      * @return the number of the free parking lot to which the next incoming car will be directed
      */
+    /*int locator( CarIF car ){
+        // numbers of parking lots start at 1, not zero
+        return 1 + (( cars().size() - 1 ) % this.MAX());
+    }*/
+
     int locator( CarIF car ){
         // numbers of parking lots start at 1, not zero
         return 1 + (( cars().size() - 1 ) % this.MAX());
     }
+
 
     /**
      * @return the list of all cars stored in the servlet context so far
