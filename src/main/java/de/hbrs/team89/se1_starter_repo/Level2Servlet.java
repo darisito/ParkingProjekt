@@ -20,7 +20,7 @@ public class Level2Servlet extends ParkhausServlet {
 
     @Override
     int MAX(){ // maximum number of parking slots on level 2
-        return 12;
+        return 20;
     }
 
     @Override
