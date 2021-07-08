@@ -65,7 +65,11 @@ public abstract class ParkhausServlet extends HttpServlet {
                 // Format: Nr, timer begin, duration, price, Ticket, color, space, client category, vehicle type, license (PKW Kennzeichen)
                 // For example:
                 // out.println("1/1619420863044/_/_/Ticket1/#0d1e0a/2/any/PKW/1,2/1619420863045/_/_/Ticket2/#dd10aa/3/any/PKW/2"); // TODO replace by real list of cars
+                for (CarIF c: cars()) {
+                    out.println(c + ", ");
+                }
                 break;
+
             case "chart":
                 // TODO send chart infos as JSON object to client
                 break;
@@ -95,16 +99,17 @@ public abstract class ParkhausServlet extends HttpServlet {
 
         switch( event ){
             case "enter":
-                CarIF newCar = new Car(new Scanner(restParams[0]).useDelimiter("\\D+").nextInt(), new Scanner(restParams[1]).useDelimiter("\\D+").nextLong(), new Scanner(restParams[7]).useDelimiter("\\D+").nextLine(), new Scanner(restParams[6]).useDelimiter("\\D+").nextInt(), new Scanner(restParams[8]).useDelimiter("\\D+").nextLine());
+                CarIF newCar = new Car(new Scanner(restParams[0]).useDelimiter("\\D+").nextInt(), new Scanner(restParams[1]).useDelimiter("\\D+").nextLong(), new Scanner(restParams[4]).useDelimiter("\\D+").nextLine(),
+                                       new Scanner(restParams[5]).useDelimiter("\\D+").nextLine(), new Scanner(restParams[6]).useDelimiter("\\D+").nextInt(), new Scanner(restParams[7]).useDelimiter("\\D+").nextLine(),
+                                       new Scanner(restParams[8]).useDelimiter("\\D+").nextLine(), new Scanner(restParams[9]).useDelimiter("\\D+").nextInt());
                 cars().add(newCar);
                 parkingGarage.enter(newCar);
-                System.out.println( "enter," + newCar );
+                System.out.println( "enter/" + newCar );
                 // re-direct car to another parking lot
                 // out.println( locator( newCar ) );
                 break;
             case "leave":
-                CarIF oldCar = cars().get(cars().size() - 1);
-                parkingGarage.leave(oldCar);
+                CarIF oldCar = parkingGarage.get(new Scanner(restParams[6]).useDelimiter("\\D+").nextInt());
                 if ( params.length > 4 ){
                     if (!"_".equals(restParams[2])) {
                         oldCar.setDuration(new Scanner(restParams[2]).useDelimiter("\\D+").nextInt());
@@ -114,7 +119,8 @@ public abstract class ParkhausServlet extends HttpServlet {
                         oldCar.setPrice(new Scanner(restParams[3]).useDelimiter("\\D+").nextInt());
                     }
                 }
-                System.out.println("leave, " + oldCar );
+                parkingGarage.leave(oldCar);
+                System.out.println("leave/" + oldCar );
                 break;
             case "invalid": case "occupied":
                 System.out.println(body);
