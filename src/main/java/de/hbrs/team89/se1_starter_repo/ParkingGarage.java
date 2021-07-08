@@ -50,6 +50,11 @@ public class ParkingGarage implements ParkingGarageIF {
         return null;
     }
 
+    @Override
+    public int next_free_parkingspot() {
+        return 0;
+    }
+
     /**
      * @return the parking garage
      */

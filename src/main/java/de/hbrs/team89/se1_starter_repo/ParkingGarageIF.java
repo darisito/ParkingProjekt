@@ -13,7 +13,7 @@ public interface ParkingGarageIF{
     void enter(CarIF newCar);
     void leave(CarIF oldCar);
     CarIF get(int index);
-    public int next_free_parkingspot();
+    int next_free_parkingspot();
     List<CarIF> getParkingSpot();
     String toString();
 }
