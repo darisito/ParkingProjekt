@@ -39,6 +39,7 @@ public abstract class ParkhausServlet extends HttpServlet {
         String cmd = request.getParameter("cmd");
         //Autor Darius
         String amount = request.getParameter("amount");
+        String ticketToPay= request.getParameter("pay-ticket");
         //gibt get anfragen auf server console aus
         System.out.println( cmd + " requested: " + request.getQueryString());
 
@@ -67,7 +68,8 @@ public abstract class ParkhausServlet extends HttpServlet {
                 out.println( "<h4 style=\"color:green;\">Them sum of all cars stored so far:</h4> " +
                         "<strong>"+
                         stats.calculate_sum ( cars() )+
-                        "</strong>");
+                        "</strong>"
+                );
                 break;
             case "cars":
                 // TODO: Send list of cars stored on the server to the client.
@@ -101,11 +103,30 @@ public abstract class ParkhausServlet extends HttpServlet {
                         "<strong>" +
                         stats.average_car_price( cars() )+
                         "</strong>");
-
-
+                break;
+            case "pay-ticket":
+                String optionsHtml = getTicketOptionsAsHtml();
+                out.println(
+                        "<form action=\"level1-servlet\" method=\"get\">"+
+                            "<select name=\"pay-ticket\">\n" +
+                            getTicketOptionsAsHtml() +
+                            "</select>"+
+                            "<input type=\"submit\">"+
+                        "</form>");
+                out.println("<h3>"+ticketToPay+"</h3>");
+                break;
             default:
                 System.out.println("Invalid Command: " + request.getQueryString());
         }
+    }
+
+    private String getTicketOptionsAsHtml() {
+        String optionsHtml="";
+        for(CarIF car:cars()){
+            optionsHtml += "<option value=\""+car.getTicket()+"\">"+car.getTicket()+"</option>\n";
+
+        }
+        return optionsHtml;
     }
 
     /**

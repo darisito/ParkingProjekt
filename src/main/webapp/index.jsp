@@ -51,7 +51,7 @@
     <h1>Parkhaus Etage 1</h1>
     <ccm-parkhaus-10-0-2
             server_url="./level1-servlet"
-            extra_buttons='["sum", "Total Cars", "Average Price", "cars"]'
+            extra_buttons='["sum", "Total Cars", "Average Price", "cars","pay-ticket"]'
             hide_table="true"
             name="Etage1"
             license_max="15"
