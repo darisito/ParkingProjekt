@@ -107,13 +107,13 @@ public abstract class ParkhausServlet extends HttpServlet {
             case "pay-ticket":
                 String optionsHtml = getTicketOptionsAsHtml();
                 out.println(
-                        "<form action=\"level1-servlet\" method=\"get\">"+
-                            "<select name=\"pay-ticket\">\n" +
+                        "<form action=\"kasse\" method=\"get\">"+
+                            "<select name=\"pay-ticket\" id=\"ticket\">\n" +
                             getTicketOptionsAsHtml() +
                             "</select>"+
-                            "<input type=\"submit\">"+
-                        "</form>");
-                out.println("<h3>"+ticketToPay+"</h3>");
+                            "<input type=\"submit\" value=\"check-out\">"+
+                        "</form>"
+                );
                 break;
             default:
                 System.out.println("Invalid Command: " + request.getQueryString());
